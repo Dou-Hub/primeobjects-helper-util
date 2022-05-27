@@ -34,9 +34,7 @@ export {
     formatJSONString,
     deepFlatten,
     getPropName,
-    doNothing,
-    _process,
-    _track
+    doNothing
 } from './core';
 
 export { slug } from './slug';
@@ -61,5 +59,12 @@ export {
 } from './web';
 
 export {
-    GUID_EMPTY
+    GUID_EMPTY,
+    _process,
+    _track,
+    _window
 } from './constants';
+
+export {
+    COLORS, SLATE, GRAY, ZINC, NEUTRAL, STONE, RED
+} from './colors';

@@ -8,10 +8,7 @@ import {
     isArray, isNumber, camelCase, isNaN, isInteger, isFunction
 } from "lodash";
 // import { isValidNumber } from "libphonenumber-js";
-import { GUID_EMPTY } from './constants';
-
-export const _process: any = typeof process !== "undefined" ? process : {};;
-export const _track = `${_process?.env?.TRACK}`.toLowerCase() == 'true';
+import { GUID_EMPTY,_process,_track } from './constants';
 
 export const getPropName = (s: string): string => {
     return formatText(s.replace(/[^a-zA-Z0-9]/g, ' ').replace(/[ ]{2,}/gi, ' '), 'camel');
