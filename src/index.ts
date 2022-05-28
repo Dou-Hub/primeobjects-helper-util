@@ -66,5 +66,16 @@ export {
 } from './constants';
 
 export {
-    COLORS, SLATE, GRAY, ZINC, NEUTRAL, STONE, RED
+    COLORS,  SLATE, GRAY, ZINC, NEUTRAL, STONE, RED, ORANGE,
+    AMBER, YELLOW, LIME, GREEN, EMERALD,
+    TEAL, CYAN, SKY, BLUE, INDIGO, VIOLET,
+    PURPLE, FUCHSIA, PINK, ROSE
 } from './colors';
+
+export {
+    getFileType,
+    getContentType,
+    getAcceptExtension,
+    getAcceptMIMEs,
+    getAcceptFileExtensions
+} from './file';
