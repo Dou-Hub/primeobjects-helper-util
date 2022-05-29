@@ -62,7 +62,8 @@ export {
     GUID_EMPTY,
     _process,
     _track,
-    _window
+    _window,
+    SSR
 } from './constants';
 
 export {
