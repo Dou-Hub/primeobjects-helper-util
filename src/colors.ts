@@ -286,9 +286,12 @@ export const ROSE = {
     "900": "#"
 }
 
+export const WHITE = '#ffffff';
+export const BLACK = '#000000';
+
 export const COLORS = {
     SLATE, GRAY, ZINC, NEUTRAL, STONE, RED, ORANGE,
     AMBER, YELLOW, LIME, GREEN, EMERALD,
     TEAL, CYAN, SKY, BLUE, INDIGO, VIOLET,
-    PURPLE, FUCHSIA, PINK, ROSE
+    PURPLE, FUCHSIA, PINK, ROSE, WHITE, BLACK
 }

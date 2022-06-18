@@ -80,3 +80,15 @@ export {
     getAcceptMIMEs,
     getAcceptFileExtensions
 } from './file';
+
+export {
+    getRecordDisplay,
+    getRecordMedia,
+    getRecordContent,
+    getRecordAbstract,
+    getRecordFullName,
+    getRecordEmailAddress,
+    getRecordAddress,
+    getRecordPageMetadata,
+    applyRecordSlug
+} from './record';
