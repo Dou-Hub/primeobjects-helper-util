@@ -1,3 +1,6 @@
+import { isNil } from "lodash"
+import { isNonEmptyString } from "./core"
+
 export const SLATE = {
     "50": "#f8fafc",
     "100": "#f1f5f9",
@@ -294,4 +297,9 @@ export const COLORS = {
     AMBER, YELLOW, LIME, GREEN, EMERALD,
     TEAL, CYAN, SKY, BLUE, INDIGO, VIOLET,
     PURPLE, FUCHSIA, PINK, ROSE, WHITE, BLACK
+}
+
+export const getColor = (name: string, index: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900, defaultName?: string): string => {
+    const color: Record<string, any> = COLORS[name.toUpperCase()];
+    return isNil(color) ? getColor(isNonEmptyString(defaultName) ? `${defaultName}` : 'sky', index, 'sky') : color[`${index}`];
 }
