@@ -4,7 +4,7 @@
 //  The detail information can be found in the LICENSE file in the root directory of this source tree.
 
 import { isNonEmptyString } from './core';
-import { without, find, map, isNil } from 'lodash'
+import { without, find, map, isNil } from 'lodash';
 
 export const getBaseDomain = (domain: string): string => {
     if (isNonEmptyString(domain)) {

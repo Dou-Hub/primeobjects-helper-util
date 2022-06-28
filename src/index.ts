@@ -67,10 +67,10 @@ export {
 } from './constants';
 
 export {
-    COLORS,  SLATE, GRAY, ZINC, NEUTRAL, STONE, RED, ORANGE,
+    COLORS, SLATE, GRAY, ZINC, NEUTRAL, STONE, RED, ORANGE,
     AMBER, YELLOW, LIME, GREEN, EMERALD,
     TEAL, CYAN, SKY, BLUE, INDIGO, VIOLET,
-    PURPLE, FUCHSIA, PINK, ROSE
+    PURPLE, FUCHSIA, PINK, ROSE, getColor
 } from './colors';
 
 export {
@@ -92,3 +92,8 @@ export {
     getRecordPageMetadata,
     applyRecordSlug
 } from './record';
+
+
+export { markdown } from './markdown';
+
+export { getEntityBySlug, getEntity, getEntityTypeFromFileName } from './metadata';

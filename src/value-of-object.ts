@@ -4,12 +4,7 @@ import {
     isArray, forOwn, camelCase, isNaN, isBoolean
 } from "lodash";
 
-const isNonEmptyString = (s: any, trim?: boolean): boolean => {
-    return (
-        isString(s) &&
-        ((!trim && s.length > 0) || (trim && s.trim().length > 0))
-    ) ? true : false;
-};
+import { isNonEmptyString } from './core';
 
 export const getObjectPropValue = (obj: Record<string, any> | null | undefined, key: string, caseSensitive?: boolean) => {
     let value = null;
