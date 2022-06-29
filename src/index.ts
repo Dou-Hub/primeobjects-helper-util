@@ -11,8 +11,9 @@ export {
     serialNumber,
     getDateTimeString,
     ttl,
-    getMemoryCache,
-    setMemoryCache,
+    getCache,
+    setCache,
+    removeCache,
     isEmptyGuid,
     checkToTrue,
     isIntString,
@@ -34,6 +35,8 @@ export {
     formatJSONString,
     deepFlatten,
     getPropName,
+    getWindow,
+    getProcess,
     doNothing
 } from './core';
 

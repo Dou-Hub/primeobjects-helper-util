@@ -8,7 +8,15 @@ import {
     isArray, isNumber, camelCase, isNaN, isInteger, isFunction
 } from "lodash";
 // import { isValidNumber } from "libphonenumber-js";
-import { GUID_EMPTY,_process,_track } from './constants';
+import { GUID_EMPTY, _track } from './constants';
+
+export const getWindow = (): Record<string, any> => {
+    return typeof window !== "undefined" ? window : {};
+}
+
+export const getProcess = (): Record<string, any> => {
+    return typeof process !== "undefined" ? process : {};
+}
 
 export const getPropName = (s: string): string => {
     return formatText(s.replace(/[^a-zA-Z0-9]/g, ' ').replace(/[ ]{2,}/gi, ' '), 'camel');
@@ -16,7 +24,7 @@ export const getPropName = (s: string): string => {
 
 //to handle TS6133: xxxx is declared but its value is never read.
 export const doNothing = (o?: any) => {
-    _process.doNothing = o;
+    getProcess().doNothing = o;
 }
 
 export const stringToColor = (str: string, s?: number, l?: number) => {
@@ -164,41 +172,18 @@ export const ttl = (mins: number) => {
     return Math.floor(date / 1000) + (mins * 60);
 };
 
-if (!_isObject(_process._memoryCache)) _process._memoryCache = {};
-
-export const getMemoryCache = (key: string) => {
-
-    if (!isNonEmptyString(key)) return null;
-
-    try {
-        const result = _process._memoryCache[key];
-        if (result) {
-            if (isInteger(result.ttl) && Date.now() > result.ttl * 1000) { //ttl is in seconds
-                return null;
-            }
-            if (!isNil(result.cache)) return result.cache;
-        }
+export const getGlobalObject = ()=>{
+    let global: Record<string, any> = {};
+    if (typeof window !== "undefined") 
+    {
+        global = window;
     }
-    catch (error) {
-        console.log(error);
+    else
+    {
+        if (typeof process !== "undefined")  global = process;
     }
-
-    return null;
-};
-
-export const setMemoryCache = (key: string, value: any, expireMinutes: number) => {
-
-    if (!isNonEmptyString(key)) return;
-    _process._memoryCache[key] = {};
-    if (expireMinutes > 0) {
-        _process._memoryCache[key].ttl = ttl(expireMinutes);
-    }
-    else {
-        _process._memoryCache[key].ttl = ttl(30 * 24 * 60); //30 days default
-    }
-
-    _process._memoryCache[key].cache = value;
-};
+    return global;
+}
 
 export const isEmptyGuid = (v: string) => {
     return GUID_EMPTY == v;
@@ -473,4 +458,67 @@ export const deepFlatten = (array: Array<any>): Array<any> => {
     });
 
     return result;
+}
+
+export const getCache = (key: string, defaultValue?: any) => {
+
+    if (!isNonEmptyString(key)) return null;
+
+    const global = getGlobalObject();
+
+    if (!isObject(global.localCache)) global.localCache = {};
+
+    let data = null;
+
+    const cacheData = global.localCache[key];
+    if (isNil(cacheData)) return defaultValue;
+
+    if (isNonEmptyString(cacheData)) {
+        try {
+            data = JSON.parse(cacheData);
+            if (isObject(data) && isInteger(data.ttl)) //ttl in seconds
+            {
+                if (Date.now() > data.ttl * 1000) {
+                    removeCache(key);
+                    return !isNil(defaultValue) ? defaultValue : null;
+                }
+                else {
+                    return data.data;
+                }
+            }
+        }
+        catch
+        {
+            data = cacheData;
+        }
+    }
+    else {
+        data = cacheData;
+    }
+
+    return !isNil(data) ? data : (!isNil(defaultValue) ? defaultValue : null);
+}
+
+
+export const setCache = (key: string, data: any, expireMinutes?: number) => {
+
+    const global = getGlobalObject();
+ 
+    if (!isNonEmptyString(key)) return null;
+    if (!isObject(global.localCache)) global.localCache = {};
+    if (isNil(data)) return removeCache(key);
+
+    if (!isNil(expireMinutes) && isInteger(expireMinutes) && expireMinutes > 0) {
+        const cacheData = { data, ttl: ttl(expireMinutes) };
+        global.localCache[key] = JSON.stringify(cacheData);
+    }
+    else {
+        global.localCache[key] = isObject(data) ? JSON.stringify(data) : data;
+    }
+}
+
+export const removeCache = (key: string) => {
+    const global = getGlobalObject();
+    if (!isObject(global.localCache)) global.localCache = {};
+    delete global.localCache[key];
 }
