@@ -36,21 +36,22 @@ export {
     deepFlatten,
     getPropName,
     getWindow,
+    WINDOW_TYPE,
     getProcess,
-    doNothing
-} from './core';
+    doNothing,
+} from "./core";
 
-export { slug } from './slug';
-export { newGuid } from './uuid';
-export { csvToJson } from './csv';
+export { slug } from "./slug";
+export { newGuid } from "./uuid";
+export { csvToJson } from "./csv";
 
 export {
     getObjectPropValue,
     getBooleanPropValue,
     getIntValueOfObject,
     getArrayPropValueOfObject,
-    getPropValueOfObject
-} from './value-of-object';
+    getPropValueOfObject,
+} from "./value-of-object";
 
 export {
     getWebQueryValue,
@@ -58,31 +59,45 @@ export {
     getWebLocation,
     getWebRootUrl,
     fixUrl,
-    getBaseDomain
-} from './web';
+    getBaseDomain,
+} from "./web";
+
+export { GUID_EMPTY, _process, _track, _window, SSR } from "./constants";
 
 export {
-    GUID_EMPTY,
-    _process,
-    _track,
-    _window,
-    SSR
-} from './constants';
-
-export {
-    COLORS, SLATE, GRAY, ZINC, NEUTRAL, STONE, RED, ORANGE,
-    AMBER, YELLOW, LIME, GREEN, EMERALD,
-    TEAL, CYAN, SKY, BLUE, INDIGO, VIOLET,
-    PURPLE, FUCHSIA, PINK, ROSE, getColor
-} from './colors';
+    COLORS,
+    SLATE,
+    GRAY,
+    ZINC,
+    NEUTRAL,
+    STONE,
+    RED,
+    ORANGE,
+    AMBER,
+    YELLOW,
+    LIME,
+    GREEN,
+    EMERALD,
+    TEAL,
+    CYAN,
+    SKY,
+    BLUE,
+    INDIGO,
+    VIOLET,
+    PURPLE,
+    FUCHSIA,
+    PINK,
+    ROSE,
+    getColor,
+} from "./colors";
 
 export {
     getFileType,
     getContentType,
     getAcceptExtension,
     getAcceptMIMEs,
-    getAcceptFileExtensions
-} from './file';
+    getAcceptFileExtensions,
+} from "./file";
 
 export {
     getRecordDisplay,
@@ -93,10 +108,13 @@ export {
     getRecordEmailAddress,
     getRecordAddress,
     getRecordPageMetadata,
-    applyRecordSlug
-} from './record';
+    applyRecordSlug,
+} from "./record";
 
+export { markdown } from "./markdown";
 
-export { markdown } from './markdown';
-
-export { getEntityBySlug, getEntity, getEntityTypeFromFileName } from './metadata';
+export {
+    getEntityBySlug,
+    getEntity,
+    getEntityTypeFromFileName,
+} from "./metadata";
