@@ -19,20 +19,28 @@ import {
     isFunction,
 } from "lodash";
 // import { isValidNumber } from "libphonenumber-js";
-import { GUID_EMPTY, _track } from "./constants";
+import { GUID_EMPTY } from "./constants";
 
-export type WINDOW_TYPE = Window &
+export type TWindow = Window &
     typeof globalThis & {
         attachEvent: (event: string, fn: any) => void;
         detachEvent: (event: string, fn: any) => void;
     };
 
-export const getWindow = (): WINDOW_TYPE | Record<string, any> => {
+export const getWindow = (): TWindow | Record<string, any> => {
     return typeof window !== "undefined" ? window : {};
 };
 
 export const getProcess = (): Record<string, any> => {
     return typeof process !== "undefined" ? process : {};
+};
+
+export const isSSR = (): boolean => {
+    return typeof window === "undefined";
+};
+
+export const trackIsOn = (): boolean => {
+    return getGlobalObject().track == true;
 };
 
 export const getPropName = (s: string): string => {
@@ -215,9 +223,6 @@ export const getGlobalObject = () => {
     return global;
 };
 
-export const isEmptyGuid = (v: string) => {
-    return GUID_EMPTY == v;
-};
 
 export const checkToTrue = (js: string, props: any): boolean => {
     if (!_isObject(props)) props = {};
@@ -582,4 +587,24 @@ export const removeCache = (key: string) => {
     const global = getGlobalObject();
     if (!isObject(global.localCache)) global.localCache = {};
     delete global.localCache[key];
+};
+
+
+export const cleanGuid = (v: string): string => {
+    return !v
+        ? ""
+        : (v + "")
+            .replace("{", "")
+            .replace("}", "")
+            .replace(/_/g, "-")
+            .trim()
+            .toLowerCase();
+};
+
+export const sameGuid = (a: string, b: string): boolean => {
+    return cleanGuid(a) === cleanGuid(b);
+};
+
+export const isEmptyGuid = (v: string) => {
+    return sameGuid(v, GUID_EMPTY);
 };

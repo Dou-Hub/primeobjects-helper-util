@@ -36,9 +36,13 @@ export {
     deepFlatten,
     getPropName,
     getWindow,
-    WINDOW_TYPE,
+    TWindow as Window,
     getProcess,
     doNothing,
+    trackIsOn,
+    isSSR,
+    cleanGuid, 
+    sameGuid
 } from "./core";
 
 export { slug } from "./slug";
@@ -62,7 +66,7 @@ export {
     getBaseDomain,
 } from "./web";
 
-export { GUID_EMPTY, _process, _track, _window, SSR } from "./constants";
+export { GUID_EMPTY} from "./constants";
 
 export {
     COLORS,
@@ -88,8 +92,9 @@ export {
     FUCHSIA,
     PINK,
     ROSE,
-    getColor,
+    getColor
 } from "./colors";
+
 
 export {
     getFileType,
@@ -118,3 +123,24 @@ export {
     getEntity,
     getEntityTypeFromFileName,
 } from "./metadata";
+
+
+export {
+    isMember,
+    isOwner,
+    hasMemberRole,
+    hasRole,
+    hasAllRoles,
+    hasAnyRole,
+    checkRecordPrivilege,
+    isSolutionOwner,
+    recordOwnedByOrganization,
+    checkLicenses,
+    hasLicense,
+    checkPrivileges,
+    checkEntityPrivilege,
+    checkPrivilege,
+    isReader,
+    isAuthor,
+    hasPrivilege
+} from './auth';
