@@ -16,7 +16,7 @@ import {
     camelCase,
     isNaN,
     isInteger,
-    isFunction,
+    isFunction
 } from "lodash";
 // import { isValidNumber } from "libphonenumber-js";
 import { GUID_EMPTY } from "./constants";
@@ -39,8 +39,22 @@ export const isSSR = (): boolean => {
     return typeof window === "undefined";
 };
 
-export const trackIsOn = (): boolean => {
-    return getGlobalObject().track == true;
+export const getGlobalEnv = (): boolean => {
+    return getGlobalObject().env;
+};
+
+export const appTrackIsOn = (): boolean => {
+    const global = getGlobalObject();
+    if (`${global.APP_TRACK}` == `true`) return true;
+    if (`${global.env?.APP_TRACK}` == `true`) return true;
+    return false;
+};
+
+export const libTrackIsOn = (): boolean => {
+    const global = getGlobalObject();
+    if (`${global.LIB_TRACK}` == `true`) return true;
+    if (`${global.env?.LIB_TRACK}` == `true`) return true;
+    return false;
 };
 
 export const getPropName = (s: string): string => {
@@ -223,7 +237,6 @@ export const getGlobalObject = () => {
     return global;
 };
 
-
 export const checkToTrue = (js: string, props: any): boolean => {
     if (!_isObject(props)) props = {};
 
@@ -272,7 +285,7 @@ export const isPassword = (v: string, settings?: any) => {
         needUpperCaseLetter,
         needDigit,
         needSpecialChar,
-        minLen,
+        minLen
     } = settings;
 
     if (isNonEmptyString(v)) v = v.trim().replace(/ /g, "");
@@ -423,7 +436,7 @@ export const groupItems = (
                 (item: Record<string, any>) => {
                     return propNameForItemSort && item[propNameForItemSort];
                 }
-            ),
+            )
         };
     });
     return result;
@@ -442,7 +455,7 @@ export const shortenNumber = (num: number, fractionDigits?: number) => {
         { value: 1e9, symbol: "G" },
         { value: 1e12, symbol: "T" },
         { value: 1e15, symbol: "P" },
-        { value: 1e18, symbol: "E" },
+        { value: 1e18, symbol: "E" }
     ];
     //const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
     const item = lookup
@@ -589,16 +602,15 @@ export const removeCache = (key: string) => {
     delete global.localCache[key];
 };
 
-
 export const cleanGuid = (v: string): string => {
     return !v
         ? ""
         : (v + "")
-            .replace("{", "")
-            .replace("}", "")
-            .replace(/_/g, "-")
-            .trim()
-            .toLowerCase();
+              .replace("{", "")
+              .replace("}", "")
+              .replace(/_/g, "-")
+              .trim()
+              .toLowerCase();
 };
 
 export const sameGuid = (a: string, b: string): boolean => {

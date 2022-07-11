@@ -5,7 +5,7 @@
 
 import { isNil, each, isArray, find, isFunction } from "lodash";
 import { GUID_EMPTY } from "./constants";
-import { isNonEmptyString, isObject, isEmptyGuid, trackIsOn, sameGuid } from "./core";
+import { isNonEmptyString, isObject, isEmptyGuid, appTrackIsOn, sameGuid } from "./core";
 import { getEntity } from "./metadata";
 
 export const checkRecordPrivilege = (
@@ -14,7 +14,7 @@ export const checkRecordPrivilege = (
     prType: string
 ): boolean => {
     if (!isObject(record)) {
-        if (trackIsOn()) console.log("NO_RECORD");
+        if (appTrackIsOn()) console.log("NO_RECORD");
         return false;
     }
 
@@ -53,7 +53,7 @@ export const checkLicenses = (
     const trackPrefix = "checkLicenses";
 
     if (isNil(context?.solution)) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.solutionNotFound Skip Licenses Check`, {
                 context,
                 featureOrEntityName,
@@ -62,7 +62,7 @@ export const checkLicenses = (
     }
 
     if (isNil(context?.user)) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.userNotFound`, {
                 context,
                 featureOrEntityName,
@@ -78,7 +78,7 @@ export const checkLicenses = (
     // if (isRootAdmin(context)) return true;
 
     if (!isNonEmptyString(featureOrEntityName)) {
-        if (trackIsOn()) console.log(`${trackPrefix}.noFeatureOrEntityName`);
+        if (appTrackIsOn()) console.log(`${trackPrefix}.noFeatureOrEntityName`);
         return false;
     }
 
@@ -118,7 +118,7 @@ export const checkLicenses = (
         }
     });
 
-    if (!pass && trackIsOn())
+    if (!pass && appTrackIsOn())
         console.log(`${trackPrefix}.noPass`, {
             userLicenses,
             featureOrEntityName,
@@ -136,17 +136,17 @@ export const hasLicense = (
     const trackPrefix = "hasLicense";
 
     if (!isNonEmptyString(name)) {
-        if (trackIsOn()) console.log(`${trackPrefix}.noName`);
+        if (appTrackIsOn()) console.log(`${trackPrefix}.noName`);
         return false;
     }
 
     if (!isObject(user)) {
-        if (trackIsOn()) console.log(`${trackPrefix}.noUser`);
+        if (appTrackIsOn()) console.log(`${trackPrefix}.noUser`);
         return false;
     }
 
     if (isNil(solution)) {
-        if (trackIsOn()) console.log(`${trackPrefix}.noSolution`);
+        if (appTrackIsOn()) console.log(`${trackPrefix}.noSolution`);
         return false;
     }
 
@@ -178,7 +178,7 @@ export const checkPrivileges = (
     const { user } = context;
 
     if (!isObject(user)) {
-        if (trackIsOn()) console.log(`${trackPrefix}.noUser`);
+        if (appTrackIsOn()) console.log(`${trackPrefix}.noUser`);
         return false;
     }
 
@@ -241,7 +241,7 @@ export const checkPrivileges = (
             }
         }
 
-        if (!check && trackIsOn()) {
+        if (!check && appTrackIsOn()) {
             console.log(`${trackPrefix}.${privilege}`, {
                 privilegeInfo,
                 context,
@@ -249,7 +249,7 @@ export const checkPrivileges = (
         }
     });
 
-    if (!pass && trackIsOn())
+    if (!pass && appTrackIsOn())
         console.log(`${trackPrefix}.noPass`, { privileges });
 
     return pass;
@@ -278,7 +278,7 @@ export const checkEntityPrivilege = (
                 : `Entity.${entityName}`
         )
     ) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.${prType}.checkLicenses`, {
                 entityName,
                 entityType,
@@ -338,7 +338,7 @@ export const checkPrivilege = (
 
     //entity has to be valid
     if (!isObject(entity)) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.noEntity`, {
                 solution,
                 entityName,
@@ -354,7 +354,7 @@ export const checkPrivilege = (
             entity?.disableDelete ||
             (isObject(record.system) && record.system.disableDelete))
     ) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.disableDelete`, {
                 record,
                 entity,
@@ -369,7 +369,7 @@ export const checkPrivilege = (
             entity?.disableUpdate ||
             (isObject(record.system) && record.system.disableUpdate))
     ) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.disableUpdate`, {
                 record,
                 entity,
@@ -379,7 +379,7 @@ export const checkPrivilege = (
     }
 
     if (prType === "create" && entity?.disableCreate) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.disableCreate`, { entity });
         return false;
     }
@@ -388,7 +388,7 @@ export const checkPrivilege = (
 
     //All in all the user has to have license to the entity
     if (!checkLicenses(context, `Entity.${entityName}`)) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.noEntityLicense`, {
                 context,
                 entityName,
@@ -400,7 +400,7 @@ export const checkPrivilege = (
         isNonEmptyString(entityType) &&
         !checkLicenses(context, `Entity.${entityName}.${entityType}`)
     ) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.noEntityLicense`, {
                 context,
                 entityType,
@@ -416,7 +416,7 @@ export const checkPrivilege = (
 
     //can not delete or update a record that does not exist
     if (prType === "delete" && (isEmptyGuid(record.id) || !record.id)) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.noDelete.noRecord`, { record });
         return false;
     }
@@ -437,7 +437,7 @@ export const checkPrivilege = (
 
     //User don't have any permission to any record outside of the current organization
     if (record.id != GUID_EMPTY && !recordOwnedByOrganization(user, record)) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.recordOutOfOrg`, { record, user });
         return false;
     }
@@ -459,7 +459,7 @@ export const checkPrivilege = (
     if (isEmptyGuid(record.id) && result) return true;
 
     if (prType !== "create" && isEmptyGuid(record.id)) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.log(`${trackPrefix}.isEmptyGuid(record.id`, { record });
         return false;
     }
@@ -493,7 +493,7 @@ export const checkPrivilege = (
         }
     }
 
-    if (!result && trackIsOn())
+    if (!result && appTrackIsOn())
         console.log(`${trackPrefix}.final`, { entityName, entityType, record });
 
     return result;
@@ -679,12 +679,12 @@ export const hasRole = (
     let { user, organizationId, organization } = context;
 
     if (!isObject(user)) {
-        if (trackIsOn()) console.error("The context.user is not provided.");
+        if (appTrackIsOn()) console.error("The context.user is not provided.");
         return undefined;
     }
 
     if (user.organizationId != organizationId) {
-        if (trackIsOn())
+        if (appTrackIsOn())
             console.error(
                 "The user.organizationId and context.organizationId does not match."
             );
@@ -692,7 +692,7 @@ export const hasRole = (
     }
 
     if (!isNonEmptyString(roleName)) {
-        if (trackIsOn()) console.error("The roleName is not provided.");
+        if (appTrackIsOn()) console.error("The roleName is not provided.");
         return undefined;
     }
 
@@ -712,7 +712,7 @@ export const hasRole = (
     }
 
     if (!isArray(user.roles)) {
-        if (trackIsOn()) console.error("The user.roles does not exit.");
+        if (appTrackIsOn()) console.error("The user.roles does not exit.");
         return undefined;
     }
 

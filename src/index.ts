@@ -39,7 +39,10 @@ export {
     TWindow as Window,
     getProcess,
     doNothing,
-    trackIsOn,
+    appTrackIsOn,
+    libTrackIsOn,
+    getGlobalEnv,
+    getGlobalObject,
     isSSR,
     cleanGuid, 
     sameGuid
