@@ -44,89 +44,30 @@ export {
     getGlobalEnv,
     getGlobalObject,
     isSSR,
-    cleanGuid, 
-    sameGuid
+    cleanGuid,
+    sameGuid,
+    convertEnumToArray
 } from "./core";
 
 export { slug } from "./slug";
 export { newGuid } from "./uuid";
 export { csvToJson } from "./csv";
 
-export {
-    getObjectPropValue,
-    getBooleanPropValue,
-    getIntValueOfObject,
-    getArrayPropValueOfObject,
-    getPropValueOfObject,
-} from "./value-of-object";
+export { getObjectPropValue, getBooleanPropValue, getIntValueOfObject, getArrayPropValueOfObject, getPropValueOfObject } from "./value-of-object";
 
-export {
-    getWebQueryValue,
-    setWebQueryValue,
-    getWebLocation,
-    getWebRootUrl,
-    fixUrl,
-    getBaseDomain,
-} from "./web";
+export { getWebQueryValue, setWebQueryValue, getWebLocation, getWebRootUrl, fixUrl, getBaseDomain } from "./web";
 
-export { GUID_EMPTY} from "./constants";
+export { GUID_EMPTY } from "./constants";
 
-export {
-    COLORS,
-    SLATE,
-    GRAY,
-    ZINC,
-    NEUTRAL,
-    STONE,
-    RED,
-    ORANGE,
-    AMBER,
-    YELLOW,
-    LIME,
-    GREEN,
-    EMERALD,
-    TEAL,
-    CYAN,
-    SKY,
-    BLUE,
-    INDIGO,
-    VIOLET,
-    PURPLE,
-    FUCHSIA,
-    PINK,
-    ROSE,
-    getColor
-} from "./colors";
+export { COLORS, SLATE, GRAY, ZINC, NEUTRAL, STONE, RED, ORANGE, AMBER, YELLOW, LIME, GREEN, EMERALD, TEAL, CYAN, SKY, BLUE, INDIGO, VIOLET, PURPLE, FUCHSIA, PINK, ROSE, getColor } from "./colors";
 
+export { getFileType, getContentType, getAcceptExtension, getAcceptMIMEs, getAcceptFileExtensions } from "./file";
 
-export {
-    getFileType,
-    getContentType,
-    getAcceptExtension,
-    getAcceptMIMEs,
-    getAcceptFileExtensions,
-} from "./file";
-
-export {
-    getRecordDisplay,
-    getRecordMedia,
-    getRecordContent,
-    getRecordAbstract,
-    getRecordFullName,
-    getRecordEmailAddress,
-    getRecordAddress,
-    getRecordPageMetadata,
-    applyRecordSlug,
-} from "./record";
+export { getRecordDisplay, getRecordMedia, getRecordContent, getRecordAbstract, getRecordFullName, getRecordEmailAddress, getRecordAddress, getRecordPageMetadata, applyRecordSlug } from "./record";
 
 export { markdown } from "./markdown";
 
-export {
-    getEntityBySlug,
-    getEntity,
-    getEntityTypeFromFileName,
-} from "./metadata";
-
+export { getEntityBySlug, getEntity, getEntityTypeFromFileName } from "./metadata";
 
 export {
     isMember,
@@ -146,4 +87,4 @@ export {
     isReader,
     isAuthor,
     hasPrivilege
-} from './auth';
+} from "./auth";

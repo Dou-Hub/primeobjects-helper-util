@@ -3,21 +3,7 @@
 //  This source code is licensed under the MIT license.
 //  The detail information can be found in the LICENSE file in the root directory of this source tree.
 
-import {
-    isObject as _isObject,
-    isNil,
-    isString,
-    sortBy,
-    without,
-    map,
-    capitalize,
-    isArray,
-    isNumber,
-    camelCase,
-    isNaN,
-    isInteger,
-    isFunction
-} from "lodash";
+import { isObject as _isObject, isNil, isString, sortBy, without, map, capitalize, isArray, isNumber, camelCase, isNaN, isInteger, isFunction } from "lodash";
 // import { isValidNumber } from "libphonenumber-js";
 import { GUID_EMPTY } from "./constants";
 
@@ -58,10 +44,7 @@ export const libTrackIsOn = (): boolean => {
 };
 
 export const getPropName = (s: string): string => {
-    return formatText(
-        s.replace(/[^a-zA-Z0-9]/g, " ").replace(/[ ]{2,}/gi, " "),
-        "camel"
-    );
+    return formatText(s.replace(/[^a-zA-Z0-9]/g, " ").replace(/[ ]{2,}/gi, " "), "camel");
 };
 
 //to handle TS6133: xxxx is declared but its value is never read.
@@ -76,26 +59,17 @@ export const stringToColor = (str: string, s?: number, l?: number) => {
     }
 
     const h = hash % 360;
-    return `hsl(${h}, ${s && s >= 0 && s <= 100 ? s : 50}%, ${
-        l && l >= 0 && l <= 100 ? l : 50
-    }%)`;
+    return `hsl(${h}, ${s && s >= 0 && s <= 100 ? s : 50}%, ${l && l >= 0 && l <= 100 ? l : 50}%)`;
 };
 
 export const isNonEmptyString = (s: any, trim?: boolean): boolean => {
-    return isString(s) &&
-        ((!trim && s.length > 0) || (trim && s.trim().length > 0))
-        ? true
-        : false;
+    return isString(s) && ((!trim && s.length > 0) || (trim && s.trim().length > 0)) ? true : false;
 };
 
 export const isGuid = (v: any): boolean => {
     if (!isNonEmptyString(v)) return false;
-    const pattern = new RegExp(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-    );
-    return pattern.test(v.replace("{", "").replace("}", "").toLowerCase())
-        ? true
-        : false;
+    const pattern = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+    return pattern.test(v.replace("{", "").replace("}", "").toLowerCase()) ? true : false;
 };
 
 // export const isPhoneNumberAdvanced = (s: any): boolean => {
@@ -104,17 +78,12 @@ export const isGuid = (v: any): boolean => {
 // };
 
 export const isPhoneNumber = (s: string): boolean => {
-    const pattern = new RegExp(
-        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
-    );
+    const pattern = new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im);
     return pattern.test(s.trim().replace(/ /g, ""));
 };
 
 export const isEmptyString = (s: any, trim?: boolean): boolean => {
-    return isString(s) &&
-        ((!trim && s.length === 0) || (trim && s.trim().length === 0))
-        ? true
-        : false;
+    return isString(s) && ((!trim && s.length === 0) || (trim && s.trim().length === 0)) ? true : false;
 };
 
 export const assignDeep = (...args: any[]) => {
@@ -149,61 +118,36 @@ export const assignStyles = (...args: Record<string, any>[]) => {
     return styles;
 };
 
-export const getSubObject = (
-    obj: Record<string, any> | null | undefined,
-    props: string
-): Record<string, any> | undefined => {
+export const getSubObject = (obj: Record<string, any> | null | undefined, props: string): Record<string, any> | undefined => {
     if (isNil(obj)) return undefined;
     const indirectEval = eval;
     return indirectEval(`(o)=>(({${props}}) => ({${props}}))(o)`)(obj);
 };
 
-export const timeDiff = (
-    d1: Date,
-    d2: Date,
-    type: "second" | "sec" | "s" | "minute" | "min" | "m" | "hour" | "hr" | "h"
-) => {
+export const timeDiff = (d1: Date, d2: Date, type: "second" | "sec" | "s" | "minute" | "min" | "m" | "hour" | "hr" | "h") => {
     const diffT = d1.getTime() - d2.getTime();
-    if (type == "second" || type == "sec" || type == "s")
-        return Math.floor(diffT / 1000);
-    if (type == "minute" || type == "min" || type == "m")
-        return Math.floor(diffT / 1000 / 60);
-    if (type == "hour" || type == "hr" || type == "h")
-        return Math.floor(diffT / 1000 / 60 / 60);
+    if (type == "second" || type == "sec" || type == "s") return Math.floor(diffT / 1000);
+    if (type == "minute" || type == "min" || type == "m") return Math.floor(diffT / 1000 / 60);
+    if (type == "hour" || type == "hr" || type == "h") return Math.floor(diffT / 1000 / 60 / 60);
     return diffT;
 };
 
 export const getDateTimeString = (dt?: any, delimiter?: string) => {
     if (!delimiter) delimiter = "-";
-    const s = (dt ? dt : new Date())
-        .toISOString()
-        .replace("T", "-")
-        .replace(/:/g, "-")
-        .replace("Z", "")
-        .replace(/\./g, "-");
+    const s = (dt ? dt : new Date()).toISOString().replace("T", "-").replace(/:/g, "-").replace("Z", "").replace(/\./g, "-");
     return delimiter == "-" ? s : s.replace(/-/g, delimiter);
 };
 
 export const serialNumber = () => {
     const dt: Date = new Date();
-    let dtString: string = new Date(
-        dt.getTime() + dt.getTimezoneOffset() * 60000
-    ).toISOString();
-    dtString = dtString
-        .replace(/-/g, "")
-        .replace(/:/g, "")
-        .replace("Z", "")
-        .replace("T", "")
-        .replace(/[.]/g, "");
+    let dtString: string = new Date(dt.getTime() + dt.getTimezoneOffset() * 60000).toISOString();
+    dtString = dtString.replace(/-/g, "").replace(/:/g, "").replace("Z", "").replace("T", "").replace(/[.]/g, "");
     const c: string[] = dtString.substring(1).split("");
 
     let result = "";
     let i = 0;
     while (i < c.length) {
-        const n: number =
-            i < c.length - 1
-                ? parseInt(c[i]) * 10 + parseInt(c[i + 1])
-                : parseInt(c[i]);
+        const n: number = i < c.length - 1 ? parseInt(c[i]) * 10 + parseInt(c[i + 1]) : parseInt(c[i]);
         if (n <= 9) {
             result = result + `n`;
             i = i + 2;
@@ -241,9 +185,7 @@ export const checkToTrue = (js: string, props: any): boolean => {
     if (!_isObject(props)) props = {};
 
     try {
-        const func = isFunction(props.jsEvalFunction)
-            ? props.jsEvalFunction(js)
-            : null;
+        const func = isFunction(props.jsEvalFunction) ? props.jsEvalFunction(js) : null;
         if (!isFunction(func)) {
             if (func) return true;
         } else {
@@ -269,8 +211,7 @@ export const isFloatString = (v: string): boolean => {
 };
 
 export const isEmail = (email: string): boolean => {
-    if (isNonEmptyString(email))
-        email = email.trim().replace(/ /g, "").replace(/[+]/g, "");
+    if (isNonEmptyString(email)) email = email.trim().replace(/ /g, "").replace(/[+]/g, "");
     const pattern = new RegExp(
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     );
@@ -280,13 +221,7 @@ export const isEmail = (email: string): boolean => {
 export const isPassword = (v: string, settings?: any) => {
     if (!_isObject(settings)) settings = {};
 
-    const {
-        needLowerCaseLetter,
-        needUpperCaseLetter,
-        needDigit,
-        needSpecialChar,
-        minLen
-    } = settings;
+    const { needLowerCaseLetter, needUpperCaseLetter, needDigit, needSpecialChar, minLen } = settings;
 
     if (isNonEmptyString(v)) v = v.trim().replace(/ /g, "");
     if (!isNonEmptyString(v)) return false;
@@ -312,8 +247,7 @@ export const isPassword = (v: string, settings?: any) => {
 
     if (result && needSpecialChar) {
         result = new RegExp(/^(?=.*[!@#$%^&*])[\w!@#$%.^&*]+$/).test(v);
-        if (!result)
-            console.log("Password does not contain special character.");
+        if (!result) console.log("Password does not contain special character.");
     }
 
     return result;
@@ -357,20 +291,11 @@ export const isObjectString = (s: string): boolean => {
     }
 };
 
-export const removeNoValueProperty = (
-    data: Record<string, any>,
-    removeEmptyString: boolean
-): Record<string, any> => {
+export const removeNoValueProperty = (data: Record<string, any>, removeEmptyString: boolean): Record<string, any> => {
     if (isArray(data)) {
         return without(
             map(data, (r) => {
-                return r === undefined ||
-                    r === null ||
-                    (r === "" && removeEmptyString)
-                    ? null
-                    : _isObject(r)
-                    ? removeNoValueProperty(r, removeEmptyString)
-                    : r;
+                return r === undefined || r === null || (r === "" && removeEmptyString) ? null : _isObject(r) ? removeNoValueProperty(r, removeEmptyString) : r;
             }),
             null
         );
@@ -385,13 +310,7 @@ export const removeNoValueProperty = (
             if (isArray(v)) {
                 data[p] = without(
                     map(v, (r) => {
-                        return r === undefined ||
-                            r === null ||
-                            (r === "" && removeEmptyString)
-                            ? null
-                            : _isObject(r)
-                            ? removeNoValueProperty(r, removeEmptyString)
-                            : r;
+                        return r === undefined || r === null || (r === "" && removeEmptyString) ? null : _isObject(r) ? removeNoValueProperty(r, removeEmptyString) : r;
                     }),
                     null
                 );
@@ -406,19 +325,10 @@ export const removeNoValueProperty = (
     return data;
 };
 
-export const groupItems = (
-    data: Array<Record<string, any>>,
-    groups: Array<Record<string, any>>,
-    propNameForItemGroup?: string,
-    propNameForItemSort?: string
-): Array<Record<string, any>> => {
+export const groupItems = (data: Array<Record<string, any>>, groups: Array<Record<string, any>>, propNameForItemGroup?: string, propNameForItemSort?: string): Array<Record<string, any>> => {
     if (!(isArray(data) && data.length > 0)) return [];
-    propNameForItemGroup = propNameForItemGroup
-        ? propNameForItemGroup
-        : "group";
-    propNameForItemSort = propNameForItemSort
-        ? propNameForItemSort
-        : "fullName";
+    propNameForItemGroup = propNameForItemGroup ? propNameForItemGroup : "group";
+    propNameForItemSort = propNameForItemSort ? propNameForItemSort : "fullName";
 
     const result = map(groups, (group) => {
         return {
@@ -426,10 +336,7 @@ export const groupItems = (
             data: sortBy(
                 without(
                     map(data, (item: Record<string, any>) => {
-                        return propNameForItemGroup &&
-                            item[propNameForItemGroup] == group.id
-                            ? item
-                            : null;
+                        return propNameForItemGroup && item[propNameForItemGroup] == group.id ? item : null;
                     }),
                     null
                 ),
@@ -443,11 +350,7 @@ export const groupItems = (
 };
 
 export const shortenNumber = (num: number, fractionDigits?: number) => {
-    if (
-        !isNumber(fractionDigits) ||
-        (isNumber(fractionDigits) && fractionDigits < 0)
-    )
-        fractionDigits = 1;
+    if (!isNumber(fractionDigits) || (isNumber(fractionDigits) && fractionDigits < 0)) fractionDigits = 1;
     const lookup = [
         { value: 1, symbol: "" },
         { value: 1e3, symbol: "K" },
@@ -464,9 +367,7 @@ export const shortenNumber = (num: number, fractionDigits?: number) => {
         .find(function (item) {
             return num >= item.value;
         });
-    return item
-        ? item && (num / item.value).toFixed(fractionDigits) + item.symbol
-        : "0";
+    return item ? item && (num / item.value).toFixed(fractionDigits) + item.symbol : "0";
 };
 
 export const numberWithCommas = (x: number) => {
@@ -474,17 +375,7 @@ export const numberWithCommas = (x: number) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const formatText = (
-    text: string,
-    format:
-        | "lower"
-        | "upper"
-        | "capital"
-        | "capital-first"
-        | "capital-all"
-        | "camel"
-        | "initials"
-) => {
+export const formatText = (text: string, format: "lower" | "upper" | "capital" | "capital-first" | "capital-all" | "camel" | "initials") => {
     switch (format) {
         case "lower":
             return text.toLowerCase();
@@ -496,9 +387,7 @@ export const formatText = (
         case "capital-all":
             return map(text.split(" "), capitalize).join(" ");
         case "initials":
-            return map(text.split(" "), (t) =>
-                t.length > 0 ? t.charAt(0) : ""
-            ).join(" ");
+            return map(text.split(" "), (t) => (t.length > 0 ? t.charAt(0) : "")).join(" ");
         case "camel":
             return camelCase(text);
         default:
@@ -584,11 +473,7 @@ export const setCache = (key: string, data: any, expireMinutes?: number) => {
     if (!isObject(global.localCache)) global.localCache = {};
     if (isNil(data)) return removeCache(key);
 
-    if (
-        !isNil(expireMinutes) &&
-        isInteger(expireMinutes) &&
-        expireMinutes > 0
-    ) {
+    if (!isNil(expireMinutes) && isInteger(expireMinutes) && expireMinutes > 0) {
         const cacheData = { data, ttl: ttl(expireMinutes) };
         global.localCache[key] = JSON.stringify(cacheData);
     } else {
@@ -603,14 +488,7 @@ export const removeCache = (key: string) => {
 };
 
 export const cleanGuid = (v: string): string => {
-    return !v
-        ? ""
-        : (v + "")
-              .replace("{", "")
-              .replace("}", "")
-              .replace(/_/g, "-")
-              .trim()
-              .toLowerCase();
+    return !v ? "" : (v + "").replace("{", "").replace("}", "").replace(/_/g, "-").trim().toLowerCase();
 };
 
 export const sameGuid = (a: string, b: string): boolean => {
@@ -619,4 +497,14 @@ export const sameGuid = (a: string, b: string): boolean => {
 
 export const isEmptyGuid = (v: string) => {
     return sameGuid(v, GUID_EMPTY);
+};
+
+export const convertEnumToArray = (thisEnum: any): { key: string; value: string | number }[] => {
+    let result = [];
+    let i = Object.keys(thisEnum).length / 2;
+    for (let key in thisEnum) {
+        i--;
+        if (i < 0) result.push({ key, value: thisEnum[key] });
+    }
+    return result;
 };
