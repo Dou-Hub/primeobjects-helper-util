@@ -508,3 +508,20 @@ export const convertEnumToArray = (thisEnum: any): { key: string; value: string 
     }
     return result;
 };
+
+export const stringIsNumber = (s: string): boolean => {
+    return (
+        !isNaN(s) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+        !isNaN(parseFloat(s)) // ...and ensure strings of whitespace fail
+    );
+};
+
+export const stringIsInteger = (s: string): boolean => {
+    if (!stringIsNumber(s)) return false;
+    return !isNaN(parseInt(s));
+};
+
+export const stringIsFloat = (s: string): boolean => {
+    if (!stringIsNumber(s)) return false;
+    return !isNaN(parseFloat(s));
+};

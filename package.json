@@ -1,7 +1,7 @@
 {
     "name": "primeobjects-helper-util",
     "licence": "MIT",
-    "version": "1.0.36",
+    "version": "1.0.38",
     "main": "build/cjs/index.js",
     "module": "build/esm/index.js",
     "types": "build/esm/index.d.ts",
@@ -20,7 +20,7 @@
         "csvtojson": "^2.0.10",
         "libphonenumber-js": "^1.10.6",
         "lodash": "^4.17.21",
-        "marked": "^4.0.17",
+        "marked": "4.0.18",
         "slugify": "^1.6.4",
         "uuid": "^8.3.2"
     },

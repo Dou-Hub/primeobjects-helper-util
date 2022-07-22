@@ -46,7 +46,10 @@ export {
     isSSR,
     cleanGuid,
     sameGuid,
-    convertEnumToArray
+    convertEnumToArray,
+    stringIsNumber,
+    stringIsInteger,
+    stringIsFloat
 } from "./core";
 
 export { slug } from "./slug";
