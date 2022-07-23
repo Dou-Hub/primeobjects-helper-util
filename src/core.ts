@@ -77,7 +77,8 @@ export const isGuid = (v: any): boolean => {
 //     return isValidNumber(s.trim().replace(/ /g, ""));
 // };
 
-export const isPhoneNumber = (s: string): boolean => {
+export const isPhoneNumber = (s: string, allowEmpty?: boolean): boolean => {
+    if (s.length == 0 && allowEmpty) return true;
     const pattern = new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im);
     return pattern.test(s.trim().replace(/ /g, ""));
 };
@@ -198,18 +199,6 @@ export const checkToTrue = (js: string, props: any): boolean => {
     return false;
 };
 
-export const isIntString = (v: string): boolean => {
-    if (!/^-?\d+?$/.test(v)) return false;
-    const parsed = parseInt(v);
-    return !isNaN(parsed);
-};
-
-export const isFloatString = (v: string): boolean => {
-    if (!/^-?\d+(?:[.]\d*?)?$/.test(v)) return false;
-    const parsed = parseFloat(v);
-    return !isNaN(parsed);
-};
-
 export const isEmail = (email: string): boolean => {
     if (isNonEmptyString(email)) email = email.trim().replace(/ /g, "").replace(/[+]/g, "");
     const pattern = new RegExp(
@@ -221,10 +210,10 @@ export const isEmail = (email: string): boolean => {
 export const isPassword = (v: string, settings?: any) => {
     if (!_isObject(settings)) settings = {};
 
-    const { needLowerCaseLetter, needUpperCaseLetter, needDigit, needSpecialChar, minLen } = settings;
+    const { needLowerCaseLetter, needUpperCaseLetter, needDigit, needSpecialChar, minLen, allowEmpty } = settings;
 
     if (isNonEmptyString(v)) v = v.trim().replace(/ /g, "");
-    if (!isNonEmptyString(v)) return false;
+    if (v.length == 0 && allowEmpty) return true;
 
     if (v.length < (!isInteger(minLen) ? 8 : minLen)) return false;
 
@@ -509,19 +498,22 @@ export const convertEnumToArray = (thisEnum: any): { key: string; value: string 
     return result;
 };
 
-export const stringIsNumber = (s: string): boolean => {
+export const isNumberString = (s: string, allowEmpty?: boolean): boolean => {
+    if (s.length == 0 && allowEmpty) return true;
     return (
         !isNaN(s) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
         !isNaN(parseFloat(s)) // ...and ensure strings of whitespace fail
     );
 };
 
-export const stringIsInteger = (s: string): boolean => {
-    if (!stringIsNumber(s)) return false;
-    return !isNaN(parseInt(s));
+export const isIntegerString = (s: string, allowEmpty?: boolean): boolean => {
+    if (s.length == 0 && allowEmpty) return true;
+    if (!isNumberString(s, allowEmpty)) return false;
+    return !isNaN(parseInt(s)) && /^-?\d+?$/.test(s);
 };
 
-export const stringIsFloat = (s: string): boolean => {
-    if (!stringIsNumber(s)) return false;
-    return !isNaN(parseFloat(s));
+export const isFloatString = (s: string, allowEmpty?: boolean): boolean => {
+    if (s.length == 0 && allowEmpty) return true;
+    if (!isNumberString(s, allowEmpty)) return false;
+    return !isNaN(parseFloat(s)) && /^-?\d+(?:[.]\d*?)?$/.test(s);
 };

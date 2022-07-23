@@ -1,5 +1,5 @@
-import { isNil } from "lodash"
-import { isNonEmptyString } from "./core"
+import { isNil } from "lodash";
+import { isNonEmptyString } from "./core";
 
 export const SLATE = {
     "50": "#f8fafc",
@@ -12,7 +12,7 @@ export const SLATE = {
     "700": "#334155",
     "800": "#1e293b",
     "900": "#0f172a"
-}
+};
 
 export const GRAY = {
     "50": "#f9fafb",
@@ -25,7 +25,7 @@ export const GRAY = {
     "700": "#374151",
     "800": "#1f2937",
     "900": "#111827"
-}
+};
 
 export const ZINC = {
     "50": "#fafafa",
@@ -38,7 +38,7 @@ export const ZINC = {
     "700": "#3f3f46",
     "800": "#27272a",
     "900": "#18181b"
-}
+};
 
 export const NEUTRAL = {
     "50": "#fafafa",
@@ -51,7 +51,7 @@ export const NEUTRAL = {
     "700": "#404040",
     "800": "#262626",
     "900": "#171717"
-}
+};
 
 export const STONE = {
     "50": "#fafaf9",
@@ -64,7 +64,7 @@ export const STONE = {
     "700": "#44403c",
     "800": "#292524",
     "900": "#1c1917"
-}
+};
 
 export const RED = {
     "50": "#fef2f2",
@@ -77,7 +77,7 @@ export const RED = {
     "700": "#b91c1c",
     "800": "#991b1b",
     "900": "#7f1d1d"
-}
+};
 
 export const ORANGE = {
     "50": "#fff7ed",
@@ -90,7 +90,7 @@ export const ORANGE = {
     "700": "#c2410c",
     "800": "#9a3412",
     "900": "#7c2d12"
-}
+};
 
 export const AMBER = {
     "50": "#fffbeb",
@@ -103,7 +103,7 @@ export const AMBER = {
     "700": "#b45309",
     "800": "#92400e",
     "900": "#78350f"
-}
+};
 
 export const YELLOW = {
     "50": "#",
@@ -116,7 +116,7 @@ export const YELLOW = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const LIME = {
     "50": "#",
@@ -129,7 +129,7 @@ export const LIME = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const GREEN = {
     "50": "#f0fdf4",
@@ -142,7 +142,7 @@ export const GREEN = {
     "700": "#15803d",
     "800": "#166534",
     "900": "#14532d"
-}
+};
 
 export const EMERALD = {
     "50": "#",
@@ -155,7 +155,7 @@ export const EMERALD = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const TEAL = {
     "50": "#",
@@ -168,7 +168,7 @@ export const TEAL = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const CYAN = {
     "50": "#",
@@ -181,7 +181,7 @@ export const CYAN = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const SKY = {
     "50": "#f0f9ff",
@@ -194,7 +194,7 @@ export const SKY = {
     "700": "#0369a1",
     "800": "#075985",
     "900": "#0c4a6e"
-}
+};
 
 export const BLUE = {
     "50": "#eff6ff",
@@ -207,8 +207,7 @@ export const BLUE = {
     "700": "#1d4ed8",
     "800": "#1e40af",
     "900": "#1e3a8a"
-}
-
+};
 
 export const INDIGO = {
     "50": "#",
@@ -221,8 +220,7 @@ export const INDIGO = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
-
+};
 
 export const VIOLET = {
     "50": "#",
@@ -235,7 +233,7 @@ export const VIOLET = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const PURPLE = {
     "50": "#",
@@ -248,7 +246,7 @@ export const PURPLE = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const FUCHSIA = {
     "50": "#",
@@ -261,7 +259,7 @@ export const FUCHSIA = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const PINK = {
     "50": "#",
@@ -274,7 +272,7 @@ export const PINK = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
 export const ROSE = {
     "50": "#",
@@ -287,19 +285,39 @@ export const ROSE = {
     "700": "#",
     "800": "#",
     "900": "#"
-}
+};
 
-export const WHITE = '#ffffff';
-export const BLACK = '#000000';
+export const WHITE = "#ffffff";
+export const BLACK = "#000000";
 
 export const COLORS = {
-    SLATE, GRAY, ZINC, NEUTRAL, STONE, RED, ORANGE,
-    AMBER, YELLOW, LIME, GREEN, EMERALD,
-    TEAL, CYAN, SKY, BLUE, INDIGO, VIOLET,
-    PURPLE, FUCHSIA, PINK, ROSE, WHITE, BLACK
-}
+    SLATE,
+    GRAY,
+    ZINC,
+    NEUTRAL,
+    STONE,
+    RED,
+    ORANGE,
+    AMBER,
+    YELLOW,
+    LIME,
+    GREEN,
+    EMERALD,
+    TEAL,
+    CYAN,
+    SKY,
+    BLUE,
+    INDIGO,
+    VIOLET,
+    PURPLE,
+    FUCHSIA,
+    PINK,
+    ROSE,
+    WHITE,
+    BLACK
+};
 
 export const getColor = (name: string, index: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900, defaultName?: string): string => {
-    const color: Record<string, any> = COLORS[name.toUpperCase()];
-    return isNil(color) ? getColor(isNonEmptyString(defaultName) ? `${defaultName}` : 'sky', index, 'sky') : color[`${index}`];
-}
+    const color: Record<string, any> = isNonEmptyString(name) ? COLORS[name.toUpperCase()] : null;
+    return isNil(color) ? getColor(isNonEmptyString(defaultName) ? `${defaultName}` : "sky", index, "sky") : color[`${index}`];
+};

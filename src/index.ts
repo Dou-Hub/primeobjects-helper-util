@@ -16,8 +16,6 @@ export {
     removeCache,
     isEmptyGuid,
     checkToTrue,
-    isIntString,
-    isFloatString,
     isEmail,
     isPassword,
     utcISOString,
@@ -47,9 +45,9 @@ export {
     cleanGuid,
     sameGuid,
     convertEnumToArray,
-    stringIsNumber,
-    stringIsInteger,
-    stringIsFloat
+    isNumberString,
+    isIntegerString,
+    isFloatString
 } from "./core";
 
 export { slug } from "./slug";
